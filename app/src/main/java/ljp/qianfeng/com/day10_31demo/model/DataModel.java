@@ -6,8 +6,10 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import ljp.qianfeng.com.day10_31demo.bean.DetialBean;
 import ljp.qianfeng.com.day10_31demo.bean.MainBean;
 import ljp.qianfeng.com.day10_31demo.model.http.URLConstants;
+import ljp.qianfeng.com.day10_31demo.view.DetialView;
 import ljp.qianfeng.com.day10_31demo.view.MainView;
 
 /**
@@ -15,6 +17,11 @@ import ljp.qianfeng.com.day10_31demo.view.MainView;
  */
 public class DataModel {
     MainView mainView;
+    DetialView  detialView;
+
+    public void setDetialView(DetialView detialView) {
+        this.detialView = detialView;
+    }
 
     public void setMainView(MainView mainView) {
         this.mainView = mainView;
@@ -25,7 +32,9 @@ public class DataModel {
         x.http().post(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
+                Gson gson=new Gson();
+                DetialBean detialBean = gson.fromJson(result, DetialBean.class);
+                detialView.refreshDetialView(detialBean);
             }
 
             @Override
